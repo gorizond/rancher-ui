@@ -11,4 +11,20 @@ export default function(plugin: IPlugin): void {
 
   // Load a product
   // plugin.addProduct(require('./product'));
+
+  // remove cluster management icon
+  const style = document.createElement('style');
+  style.innerHTML = `
+    a[href="/c/_/manager/provisioning.cattle.io.cluster"] {
+      display: none !important;
+    }
+  `;
+  document.head.appendChild(style);
+  // redirect from cluster management to home
+  plugin.addRoutes([
+    {
+      path: '/c/_/manager/provisioning.cattle.io.cluster',
+      redirect: '/home'
+    }
+  ]);
 }
