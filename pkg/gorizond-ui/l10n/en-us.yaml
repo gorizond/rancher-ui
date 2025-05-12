@@ -1,0 +1,8 @@
+gorizond:
+  status: "Status"
+  cluster:
+    title: "Gorizond Clusters"
+    name: "Name"
+    kubernetesVersion: "Kubernetes Version"
+    provisioning: "Provisioning Progress"
+    installLink: "Copy install command"
