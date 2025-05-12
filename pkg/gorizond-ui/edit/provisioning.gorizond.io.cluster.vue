@@ -125,7 +125,7 @@ export default {
         );
 
         this.$router.push({
-          name: `c-cluster-${ YOUR_PRODUCT_NAME }-resource-id`,
+          name: `c-cluster-${ YOUR_PRODUCT_NAME }-resource-namespace-id`,
           params: {
             id: clean.metadata.name,
             namespace: clean.metadata.namespace

@@ -39,8 +39,8 @@ const routes = [
         },
     },
     {
-        name:      `c-cluster-${ YOUR_PRODUCT_NAME }-resource-id`,
-        path:      `/c/:cluster/${ YOUR_PRODUCT_NAME }/:resource/:id`,
+        name:      `c-cluster-${ YOUR_PRODUCT_NAME }-resource-namespace-id`,
+        path:      `/c/:cluster/${ YOUR_PRODUCT_NAME }/:resource/:namespace/:id`,
         component: ViewNamespacedResource,
         meta:      {
             product: YOUR_PRODUCT_NAME,
