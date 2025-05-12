@@ -1,0 +1,14 @@
+plugin/gorizond-ui-0.1.0.umd.min.37.js
+plugin/gorizond-ui-0.1.0.umd.min.37.js.map
+plugin/gorizond-ui-0.1.0.umd.min.593.js
+plugin/gorizond-ui-0.1.0.umd.min.593.js.map
+plugin/gorizond-ui-0.1.0.umd.min.60.js
+plugin/gorizond-ui-0.1.0.umd.min.60.js.map
+plugin/gorizond-ui-0.1.0.umd.min.detail.js
+plugin/gorizond-ui-0.1.0.umd.min.detail.js.map
+plugin/gorizond-ui-0.1.0.umd.min.edit.js
+plugin/gorizond-ui-0.1.0.umd.min.edit.js.map
+plugin/gorizond-ui-0.1.0.umd.min.js
+plugin/gorizond-ui-0.1.0.umd.min.js.map
+plugin/img/harvester.20240f8a.png
+plugin/package.json
