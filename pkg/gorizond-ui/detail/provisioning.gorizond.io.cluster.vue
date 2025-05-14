@@ -49,6 +49,7 @@ export default {
     },
     steps() {
       return [
+        'WaitAddAdminMember',
         'WaitHeadScaleDatabase',
         'WaitHeadScaleConfig',
         'WaitHeadScaleCreate',
