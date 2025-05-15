@@ -51,6 +51,7 @@ export default {
       return [
         'WaitAddAdminMember',
         'WaitHeadScaleDatabase',
+        'WaitHeadScaleMigrations',
         'WaitHeadScaleConfig',
         'WaitHeadScaleCreate',
         'WaitHeadScaleCreateUser',
