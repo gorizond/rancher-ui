@@ -29,6 +29,18 @@ export default function (plugin: IPlugin): void {
         }
     );
 
+    plugin.addTableColumn(
+        TableColumnLocation.RESOURCE,
+        { resource: ['provisioning.gorizond.io.cluster'] },
+        {
+            name:      'billing',
+            label:     'Billing',
+            value:     'status.billing',
+            sort:      ['status.billing', 'spec.billing'],
+            formatter: 'GorizondBillingFormatter',
+        }
+    );
+
     // remove cluster management icon
     const style = document.createElement('style');
     style.id = 'gorizond-hide-cluster-link-style';
