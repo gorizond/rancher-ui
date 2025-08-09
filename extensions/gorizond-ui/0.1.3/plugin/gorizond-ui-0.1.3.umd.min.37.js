@@ -1,0 +1,2 @@
+(("undefined"!==typeof self?self:this)["webpackChunkgorizond_ui_0_1_3"]=("undefined"!==typeof self?self:this)["webpackChunkgorizond_ui_0_1_3"]||[]).push([[37],{49037:function(e){const n=[{gorizond:{status:"Status",cluster:{title:"Gorizond Clusters",name:"Name",kubernetesVersion:"Kubernetes Version",provisioning:"Provisioning Progress",installLink:"Copy install command"}}}];e.exports=n.length<=1?n[0]:n}}]);
+//# sourceMappingURL=gorizond-ui-0.1.3.umd.min.37.js.map
