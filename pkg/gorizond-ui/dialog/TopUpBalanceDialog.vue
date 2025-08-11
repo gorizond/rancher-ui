@@ -46,7 +46,7 @@ export default {
         id: 'gorizond-install-payment-url'
       });
       this.openPostInNewTab(
-          setting + `/payment`,
+          setting.value + `/payment`,
           {
             namespace: this.namespace,
             name: this.name,
@@ -72,6 +72,7 @@ export default {
 
       document.body.appendChild(form);
       form.submit();
+      console.log(form);
       document.body.removeChild(form);
     }
   }
