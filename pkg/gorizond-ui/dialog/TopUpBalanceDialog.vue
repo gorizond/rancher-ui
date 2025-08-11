@@ -45,8 +45,9 @@ export default {
         type: 'management.cattle.io.setting',
         id: 'gorizond-install-payment-url'
       });
+      const pay_url = setting.value;
       this.openPostInNewTab(
-          setting.value + `/payment`,
+          pay_url + `/payment`,
           {
             namespace: this.namespace,
             name: this.name,
@@ -72,7 +73,6 @@ export default {
 
       document.body.appendChild(form);
       form.submit();
-      console.log(form);
       document.body.removeChild(form);
     }
   }
