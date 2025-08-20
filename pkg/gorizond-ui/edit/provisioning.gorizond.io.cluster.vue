@@ -37,6 +37,14 @@
               :options="k8sVersions"
               required
           />
+
+          <LabeledSelect
+              :disabled="mode === 'view'"
+              v-model:value="model.spec.billing"
+              label="Billing"
+              :options="billingOptions"
+              required
+          />
         </div>
       </template>
     </Card>
@@ -75,8 +83,23 @@ export default {
       loaded: false,
       model: null,
       workspaces: [],
-      k8sVersions: []
+      k8sVersions: [],
+      billingOptions: []
     };
+  },
+
+  watch: {
+    'model.metadata.namespace': {
+      handler: async function(newNs, oldNs) {
+        if (!newNs || newNs === oldNs) {
+          return;
+        }
+        await this.loadBillings(newNs);
+        if (!this.billingOptions.find(o => o.value === this.model?.spec?.billing)) {
+          this.model.spec.billing = '-free';
+        }
+      }
+    }
   },
 
   async created() {
@@ -101,17 +124,60 @@ export default {
       value: ws.metadata.name
     }));
 
+    // Load billings from the selected namespace (Fleet workspace)
+    if (this.model?.metadata?.namespace) {
+      await this.loadBillings(this.model.metadata.namespace);
+    }
+
     if (this.mode === 'create') {
       this.model.spec = {
         kubernetesVersion: this.k8sVersions.at(-1).value,
+        billing: '-free'
       };
       this.model.metadata.namespace = this.workspaces[0].value;
+      await this.loadBillings(this.model.metadata.namespace);
+      // prepend 'free' and merge fetched billings
+      this.ensureFreeBilling();
+    } else {
+      // map empty API value to UI sentinel '-free'
+      if (!this.model.spec) this.model.spec = {};
+      if (!this.model.spec.billing || this.model.spec.billing === '') {
+        this.model.spec.billing = '-free';
+      }
     }
 
     this.loaded = true;
   },
 
   methods: {
+    async loadBillings(namespace) {
+      try {
+        const res = await this.$store.dispatch('cluster/request', {
+          url: `/apis/provisioning.gorizond.io/v1/namespaces/${ namespace }/billings`,
+          method: 'GET'
+        });
+
+        // Rancher store sometimes returns plain {data} or the object directly
+        const payload = res?.data || res;
+        const items = payload?.items || payload?.data || [];
+
+        const options = Array.isArray(items)
+          ? items.map((b) => ({ label: b.metadata?.name, value: b.metadata?.name }))
+          : [];
+
+        // filter empty options
+        const filtered = options.filter(o => o && o.value);
+        // UI sentinel for empty billing is '-free'
+        this.billingOptions = [{ label: 'free (free tier use)', value: '-free' }, ...filtered];
+      } catch (e) {
+        this.billingOptions = [{ label: 'free (free tier use)', value: '-free' }];
+      }
+    },
+    ensureFreeBilling() {
+      if (!this.billingOptions.find(o => o.value === '-free')) {
+        this.billingOptions.unshift({ label: 'free (free tier use)', value: '-free' });
+      }
+    },
     async onSave() {
       const clean = JSON.parse(JSON.stringify(this.model || {}));
 
@@ -121,14 +187,15 @@ export default {
             this.model.metadata.name,
             this.model.metadata.namespace,
             this.model.spec.kubernetesVersion,
+            (this.model.spec.billing === '-free' || !this.model.spec.billing) ? '' : this.model.spec.billing,
             this.$store
         );
 
         this.$router.push({
-          name: `c-cluster-${ YOUR_PRODUCT_NAME }-resource-namespace-id`,
+          name: `c-cluster-${ YOUR_PRODUCT_NAME }-resource`,
           params: {
-            id: clean.metadata.name,
-            namespace: clean.metadata.namespace
+            cluster: this.$route.params.cluster || '_',
+            resource: 'provisioning.gorizond.io.cluster'
           }
         });
       } catch (err) {

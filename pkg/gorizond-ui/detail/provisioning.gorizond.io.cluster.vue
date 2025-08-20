@@ -11,6 +11,8 @@
       <template v-slot:body>
         <LabeledInput label="Namespace" :value="cluster.metadata.namespace" disabled />
         <LabeledInput label="Kubernetes Version" :value="cluster.spec.kubernetesVersion" disabled />
+        <LabeledInput label="Billing (Status)" :value="billingStatus" disabled />
+        <LabeledInput label="Billing (Desired)" :value="billingDesired" disabled />
         <div class="space-y-2" v-if="cluster.status.provisioning!=='Done'">
           <h3 class="text-lg font-semibold">{{ t('gorizond.cluster.provisioning') }}: {{ cluster.status.provisioning }}</h3>
           <PercentageBar :modelValue="currentStepPercentage" :showPercentage="false" :preferredDirection="'MORE'" />
@@ -72,6 +74,13 @@ export default {
       const totalSteps = this.steps.length;
       const currentIndex = this.currentStepIndex;
       return (currentIndex / (totalSteps - 1)) * 100;
+    },
+
+    billingStatus() {
+      return this.cluster?.status?.billing || 'free (free tier use)';
+    },
+    billingDesired() {
+      return this.cluster?.spec?.billing || 'free (free tier use)';
     },
 
     installUrl() {

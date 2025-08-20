@@ -18,7 +18,7 @@ export default {
 <template>
   <div>
     <div :class="{ 'text-error': isDifferent }">
-      {{ row.status?.billing || '—' }}
+      {{ row.spec?.billing === "" ? 'free (free tier use)' : row.status?.billing }}
     </div>
     <div
         v-if="row.spec?.billing && row.spec?.billing !== row.status?.billing"

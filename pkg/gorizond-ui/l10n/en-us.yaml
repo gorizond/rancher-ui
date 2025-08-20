@@ -5,4 +5,6 @@ gorizond:
     name: "Name"
     kubernetesVersion: "Kubernetes Version"
     provisioning: "Provisioning Progress"
+    billing: "Billing"
+    billingFree: "free"
     installLink: "Copy install command"

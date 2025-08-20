@@ -6,7 +6,7 @@
  * @param {string} kubernetesVersion - K3s version
  * @param {object} store - this.$store from the component
  */
-export async function createOrUpgradeGorizondCluster(name, namespace, kubernetesVersion, store) {
+export async function createOrUpgradeGorizondCluster(name, namespace, kubernetesVersion, billing, store) {
     const baseUrl = `/apis/provisioning.gorizond.io/v1/namespaces/${namespace}/clusters/${name}`;
 
     try {
@@ -18,9 +18,11 @@ export async function createOrUpgradeGorizondCluster(name, namespace, kubernetes
         
         // If GET succeeds — object exists → PATCH
 
+        const billingForApi = (billing === '-free' || billing === '' || billing === null || billing === undefined) ? '' : billing;
         const patch = {
             spec: {
-                kubernetesVersion
+                kubernetesVersion,
+                billing: billingForApi
             }
         };
 
@@ -36,6 +38,7 @@ export async function createOrUpgradeGorizondCluster(name, namespace, kubernetes
     } catch (err) {
         if (err?.code === 404) {
             // Object not found → create
+            const billingForApiCreate = (billing === '-free' || billing === '' || billing === null || billing === undefined) ? '' : billing;
             const body = {
                 apiVersion: 'provisioning.gorizond.io/v1',
                 kind: 'Cluster',
@@ -44,7 +47,8 @@ export async function createOrUpgradeGorizondCluster(name, namespace, kubernetes
                     namespace
                 },
                 spec: {
-                    kubernetesVersion
+                    kubernetesVersion,
+                    billing: billingForApiCreate
                 }
             };
 
