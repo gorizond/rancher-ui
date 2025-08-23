@@ -1,12 +1,11 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  moduleFileExtensions: ['js', 'ts', 'json', 'vue'],
+  moduleFileExtensions: ['js', 'ts', 'json'],
   transform: {
     '^.+\\.ts$': ['ts-jest', {
       tsconfig: 'tsconfig.json'
     }],
-    '^.+\\.vue$': 'vue-jest',
     '^.+\\.js$': ['babel-jest', {
       presets: ['@babel/preset-env']
     }]
@@ -28,14 +27,13 @@ module.exports = {
     '^@components/Form/LabeledSelect$': '<rootDir>/tests/mocks/Form/LabeledSelect.vue'
   },
   testMatch: [
-    '<rootDir>/tests/**/*.test.(js|ts|vue)',
-    '<rootDir>/tests/**/*.spec.(js|ts|vue)'
+    '<rootDir>/tests/**/*.test.(js|ts)',
+    '<rootDir>/tests/**/*.spec.(js|ts)'
   ],
   collectCoverageFrom: [
     'utils/**/*.{js,ts}',
     '!**/node_modules/**',
-    '!**/coverage/**',
-    '!**/*.vue'
+    '!**/coverage/**'
   ],
   coverageReporters: ['text', 'lcov', 'html'],
   setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
@@ -43,6 +41,6 @@ module.exports = {
     customExportConditions: ['node', 'node-addons']
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(@vue|vue-jest)/)'
+    'node_modules/(?!(@vue)/)'
   ]
 };
