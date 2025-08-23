@@ -6,14 +6,7 @@ module.exports = {
     '^.+\\.ts$': ['ts-jest', {
       tsconfig: 'tsconfig.json'
     }],
-    '^.+\\.vue$': ['vue-jest', {
-      pug: false,
-      css: false,
-      scss: false,
-      sass: false,
-      less: false,
-      stylus: false
-    }],
+    '^.+\\.vue$': 'vue-jest',
     '^.+\\.js$': ['babel-jest', {
       presets: ['@babel/preset-env']
     }]
@@ -39,14 +32,10 @@ module.exports = {
     '<rootDir>/tests/**/*.spec.(js|ts|vue)'
   ],
   collectCoverageFrom: [
-    'components/**/*.{js,ts,vue}',
-    'formatters/**/*.{js,ts,vue}',
-    'dialog/**/*.{js,ts,vue}',
-    'detail/**/*.{js,ts,vue}',
-    'edit/**/*.{js,ts,vue}',
     'utils/**/*.{js,ts}',
     '!**/node_modules/**',
-    '!**/coverage/**'
+    '!**/coverage/**',
+    '!**/*.vue'
   ],
   coverageReporters: ['text', 'lcov', 'html'],
   setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],

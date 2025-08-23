@@ -29,17 +29,14 @@ jobs:
         
     - name: Run unit tests
       run: |
-        cd pkg/gorizond-ui
         npm run test:unit
         
     - name: Run integration tests
       run: |
-        cd pkg/gorizond-ui
         npm run test:integration
         
     - name: Run all tests with coverage
       run: |
-        cd pkg/gorizond-ui
         npm run test:coverage
         
     - name: Upload coverage reports
