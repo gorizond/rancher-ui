@@ -9,14 +9,29 @@
       "catalog.cattle.io/ui-extensions-version": ">= 3.0.0 < 4.0.0"
     }
   },
-  "scripts": {},
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:unit": "jest --testPathPattern=unit",
+    "test:integration": "jest --testPathPattern=integration"
+  },
   "engines": {
     "node": ">=16"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "@vue/cli-plugin-typescript": "~5.0.0"
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/test-utils": "^2.4.0",
+    "@types/jest": "^27.5.0",
+    "jest": "^27.5.0",
+    "jest-environment-jsdom": "^27.5.0",
+    "ts-jest": "^27.1.0",
+    "vue-jest": "^5.0.0-alpha.10",
+    "@babel/preset-env": "^7.22.0",
+    "@babel/preset-typescript": "^7.22.0",
+    "@babel/plugin-transform-runtime": "^7.22.0"
   },
   "browserslist": [
     "> 1%",

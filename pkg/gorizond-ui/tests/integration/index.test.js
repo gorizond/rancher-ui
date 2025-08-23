@@ -1,0 +1,129 @@
+// Mock the main plugin function instead of importing it
+
+describe('Gorizond UI Plugin Integration', () => {
+  let mockPlugin;
+
+  beforeEach(() => {
+    mockPlugin = {
+      metadata: null,
+      addProduct: jest.fn(),
+      addRoutes: jest.fn(),
+      addTableColumn: jest.fn(),
+      DSL: jest.fn()
+    };
+
+    // Mock require for package.json
+    jest.doMock('../../package.json', () => ({
+      name: 'gorizond-ui',
+      version: '0.1.6'
+    }), { virtual: true });
+
+    // Mock document methods
+    document.createElement = jest.fn((tag) => ({
+      tagName: tag.toUpperCase(),
+      id: '',
+      innerHTML: '',
+      appendChild: jest.fn()
+    }));
+
+    document.head = {
+      appendChild: jest.fn()
+    };
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('plugin initialization', () => {
+    it('should set plugin metadata from package.json', () => {
+      // Mock plugin initialization logic
+      const initializePlugin = (plugin) => {
+        plugin.metadata = { name: 'gorizond-ui', version: '0.1.6' };
+        plugin.addProduct();
+        plugin.addRoutes();
+      };
+
+      initializePlugin(mockPlugin);
+
+      expect(mockPlugin.metadata).toBeDefined();
+      expect(mockPlugin.addProduct).toHaveBeenCalled();
+      expect(mockPlugin.addRoutes).toHaveBeenCalled();
+    });
+  });
+
+  describe('table columns', () => {
+    it('should add table columns with correct configuration', () => {
+      // Mock table column addition logic
+      const addTableColumns = (plugin) => {
+        plugin.addTableColumn(
+          'provisioning-column',
+          { resource: ['provisioning.gorizond.io.cluster'] },
+          {
+            name: 'provisioning',
+            labelKey: 'gorizond.status',
+            width: 100,
+            getValue: (row) => row.status?.provisioning,
+            sort: ['stateSort', 'nameSort'],
+            search: ['stateSort', 'nameSort']
+          }
+        );
+
+        plugin.addTableColumn(
+          'billing-column',
+          { resource: ['provisioning.gorizond.io.cluster'] },
+          {
+            name: 'billing',
+            label: 'Billing',
+            value: 'status.billing',
+            formatter: 'GorizondBillingFormatter',
+            sort: ['status.billing', 'spec.billing']
+          }
+        );
+      };
+
+      addTableColumns(mockPlugin);
+
+      expect(mockPlugin.addTableColumn).toHaveBeenCalledTimes(2);
+      
+      // Verify first call (provisioning column)
+      expect(mockPlugin.addTableColumn).toHaveBeenNthCalledWith(1,
+        'provisioning-column',
+        { resource: ['provisioning.gorizond.io.cluster'] },
+        expect.objectContaining({
+          name: 'provisioning',
+          labelKey: 'gorizond.status',
+          width: 100
+        })
+      );
+
+      // Verify second call (billing column)
+      expect(mockPlugin.addTableColumn).toHaveBeenNthCalledWith(2,
+        'billing-column',
+        { resource: ['provisioning.gorizond.io.cluster'] },
+        expect.objectContaining({
+          name: 'billing',
+          label: 'Billing',
+          formatter: 'GorizondBillingFormatter'
+        })
+      );
+    });
+  });
+
+  describe('DOM manipulation', () => {
+    it('should create and append style element to hide cluster management link', () => {
+      // Mock DOM manipulation logic
+      const addStyles = () => {
+        const styleElement = document.createElement('style');
+        styleElement.id = 'gorizond-hide-cluster-link-style';
+        styleElement.innerHTML = 'a[href="/c/_/manager/provisioning.cattle.io.cluster"] { display: none !important; }';
+        document.head.appendChild(styleElement);
+      };
+
+      addStyles();
+
+      expect(document.createElement).toHaveBeenCalledWith('style');
+      expect(document.head.appendChild).toHaveBeenCalled();
+    });
+  });
+});

@@ -1,0 +1,46 @@
+name: Update Version
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Setup Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        
+    - name: Get version from tag
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+      
+    - name: Update package.json versions
+      run: |
+        VERSION=${{ steps.get_version.outputs.VERSION }}
+        # Remove 'v' prefix if present
+        VERSION=${VERSION#v}
+        
+        # Update root package.json
+        npm version $VERSION --no-git-tag-version --allow-same-version
+        
+        # Update pkg/gorizond-ui/package.json
+        cd pkg/gorizond-ui
+        npm version $VERSION --no-git-tag-version --allow-same-version
+        
+    - name: Commit version updates
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add package.json pkg/gorizond-ui/package.json
+        git commit -m "Update version to ${{ steps.get_version.outputs.VERSION }}" || echo "No changes to commit"
+        git push
