@@ -21,8 +21,8 @@
     "publish-pkgs": "./node_modules/@rancher/shell/scripts/extension/publish",
     "parse-tag-name": "./node_modules/@rancher/shell/scripts/extension/parse-tag-name",
     "test": "cd pkg/gorizond-ui && npm test",
-    "test:unit": "cd pkg/gorizond-ui && npm run test:unit",
-    "test:integration": "cd pkg/gorizond-ui && npm run test:integration",
-    "test:coverage": "cd pkg/gorizond-ui && npm run test:coverage"
+    "test:unit": "cd pkg/gorizond-ui && npx jest --testPathPattern=unit",
+    "test:integration": "cd pkg/gorizond-ui && npx jest --testPathPattern=integration",
+    "test:coverage": "cd pkg/gorizond-ui && npx jest --coverage"
   }
 }
