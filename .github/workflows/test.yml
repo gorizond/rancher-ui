@@ -29,7 +29,6 @@ jobs:
       
     - name: Install package dependencies
       run: |
-        cd pkg/gorizond-ui
         npm ci
         
     - name: Run unit tests
