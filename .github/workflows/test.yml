@@ -25,11 +25,12 @@ jobs:
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm ci
+      run: npm ci --legacy-peer-deps
       
     - name: Install package dependencies
       run: |
-        npm ci
+        cd pkg/gorizond-ui
+        npm ci --legacy-peer-deps
         
     - name: Run unit tests
       run: |
