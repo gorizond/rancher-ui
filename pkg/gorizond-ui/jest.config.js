@@ -3,7 +3,9 @@ module.exports = {
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['js', 'ts', 'json', 'vue'],
   transform: {
-    '^.+\\.ts$': 'ts-jest',
+    '^.+\\.ts$': ['ts-jest', {
+      tsconfig: 'tsconfig.json'
+    }],
     '^.+\\.vue$': ['vue-jest', {
       pug: false,
       css: false,
@@ -12,7 +14,9 @@ module.exports = {
       less: false,
       stylus: false
     }],
-    '^.+\\.js$': 'babel-jest'
+    '^.+\\.js$': ['babel-jest', {
+      presets: ['@babel/preset-env']
+    }]
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
