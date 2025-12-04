@@ -1,6 +1,7 @@
 import { importTypes } from "@rancher/auto-import";
 import { IPlugin } from "@shell/core/types";
 import routes from "./routes";
+import CustomHome from "./CustomHome.vue";
 
 // Init the package
 export default function (plugin: IPlugin): void {
@@ -13,6 +14,13 @@ export default function (plugin: IPlugin): void {
   plugin.addProduct(require("./product"));
   // => => => Add Vue Routes
   plugin.addRoutes(routes);
+
+  // Override the Rancher home page but keep the standard layout (parent: plain)
+  plugin.addRoute("plain", {
+    name: "home",
+    path: "/home",
+    component: CustomHome,
+  });
 
   // remove cluster management icon
   const style = document.createElement("style");
