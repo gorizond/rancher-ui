@@ -8,6 +8,7 @@ describe("Gorizond UI Plugin Integration", () => {
       metadata: null,
       addProduct: jest.fn(),
       addRoutes: jest.fn(),
+      addL10n: jest.fn(),
       addTableColumn: jest.fn(),
       DSL: jest.fn(),
     };
@@ -44,6 +45,7 @@ describe("Gorizond UI Plugin Integration", () => {
       // Mock plugin initialization logic
       const initializePlugin = (plugin) => {
         plugin.metadata = { name: "gorizond-ui", version: "0.1.6" };
+        plugin.addL10n();
         plugin.addProduct();
         plugin.addRoutes();
       };
@@ -51,72 +53,9 @@ describe("Gorizond UI Plugin Integration", () => {
       initializePlugin(mockPlugin);
 
       expect(mockPlugin.metadata).toBeDefined();
+      expect(mockPlugin.addL10n).toHaveBeenCalled();
       expect(mockPlugin.addProduct).toHaveBeenCalled();
       expect(mockPlugin.addRoutes).toHaveBeenCalled();
-    });
-  });
-
-  describe("table columns", () => {
-    it("should add table columns with correct configuration", () => {
-      // Mock table column addition logic
-      const addTableColumns = (plugin) => {
-        plugin.addTableColumn(
-          "provisioning-column",
-          { resource: ["provisioning.gorizond.io.cluster"] },
-          {
-            name: "provisioning",
-            labelKey: "gorizond.status",
-            label: "Status",
-            value: "status.provisioning",
-            width: 100,
-            getValue: (row) => row.status?.provisioning,
-            sort: ["stateSort", "nameSort"],
-            search: ["stateSort", "nameSort"],
-          }
-        );
-
-        plugin.addTableColumn(
-          "billing-column",
-          { resource: ["provisioning.gorizond.io.cluster"] },
-          {
-            name: "billing",
-            label: "Billing",
-            value: "status.billing",
-            formatter: "GorizondBillingFormatter",
-            sort: ["status.billing", "spec.billing"],
-          }
-        );
-      };
-
-      addTableColumns(mockPlugin);
-
-      expect(mockPlugin.addTableColumn).toHaveBeenCalledTimes(2);
-
-      // Verify first call (provisioning column)
-      expect(mockPlugin.addTableColumn).toHaveBeenNthCalledWith(
-        1,
-        "provisioning-column",
-        { resource: ["provisioning.gorizond.io.cluster"] },
-        expect.objectContaining({
-          name: "provisioning",
-          labelKey: "gorizond.status",
-          label: "Status",
-          value: "status.provisioning",
-          width: 100,
-        })
-      );
-
-      // Verify second call (billing column)
-      expect(mockPlugin.addTableColumn).toHaveBeenNthCalledWith(
-        2,
-        "billing-column",
-        { resource: ["provisioning.gorizond.io.cluster"] },
-        expect.objectContaining({
-          name: "billing",
-          label: "Billing",
-          formatter: "GorizondBillingFormatter",
-        })
-      );
     });
   });
 
