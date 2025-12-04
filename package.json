@@ -6,7 +6,8 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@rancher/shell": "^3.0.4"
+    "@rancher/shell": "^3.0.4",
+    "diff-match-patch": "^1.0.5"
   },
   "resolutions": {
     "@types/node": "~20.10.0",
