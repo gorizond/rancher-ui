@@ -26,6 +26,9 @@
     "test:coverage": "cd pkg/gorizond-ui && npx jest --coverage"
   },
   "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-service": "~5.0.8",
     "file-loader": "^6.2.0",
     "typescript": "5.3.3",
     "url-loader": "^4.1.1"
