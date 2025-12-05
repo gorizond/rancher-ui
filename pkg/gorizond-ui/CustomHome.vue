@@ -8,6 +8,7 @@ const IMPORT_HIDE_STYLE_ID = "gorizond-hide-home-import-btn";
 const SUPPORT_HIDE_STYLE_ID = "gorizond-hide-support-link";
 const LAYOUT_STYLE_ID = "gorizond-home-layout";
 const CLUSTER_LINK_HIDE_STYLE_ID = "gorizond-hide-cluster-link-style";
+const MANAGE_HIDE_STYLE_ID = "gorizond-hide-home-manager-btn";
 
 export default {
   extends: Home,
@@ -32,6 +33,14 @@ export default {
         style.id = IMPORT_HIDE_STYLE_ID;
         style.textContent =
           '[data-testid="cluster-create-import-button"]{display:none !important;}';
+        document.head.appendChild(style);
+      }
+      
+      if (!document.getElementById(MANAGE_HIDE_STYLE_ID)) {
+        const style = document.createElement("style");
+        style.id = MANAGE_HIDE_STYLE_ID;
+        style.textContent =
+          '[data-testid="cluster-management-manage-button"]{display:none !important;}';
         document.head.appendChild(style);
       }
 
