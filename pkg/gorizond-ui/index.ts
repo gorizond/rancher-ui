@@ -21,13 +21,4 @@ export default function (plugin: IPlugin): void {
     path: "/home",
     component: CustomHome,
   });
-
-  // remove cluster management icon
-  const style = document.createElement("style");
-  style.id = "gorizond-hide-cluster-link-style";
-  style.innerHTML = `
-    a[href="/c/_/manager/provisioning.cattle.io.cluster"] {
-      display: none !important;
-    }`;
-  document.head.appendChild(style);
 }

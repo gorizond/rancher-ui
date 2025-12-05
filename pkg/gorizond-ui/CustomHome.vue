@@ -7,6 +7,7 @@ const RESOURCE = "provisioning.gorizond.io.cluster";
 const IMPORT_HIDE_STYLE_ID = "gorizond-hide-home-import-btn";
 const SUPPORT_HIDE_STYLE_ID = "gorizond-hide-support-link";
 const LAYOUT_STYLE_ID = "gorizond-home-layout";
+const CLUSTER_LINK_HIDE_STYLE_ID = "gorizond-hide-cluster-link-style";
 
 export default {
   extends: Home,
@@ -40,6 +41,19 @@ export default {
         style.id = SUPPORT_HIDE_STYLE_ID;
         style.textContent =
           '.home-page a[href="/support"]{display:none !important;}';
+        document.head.appendChild(style);
+      }
+
+      if (!document.getElementById(CLUSTER_LINK_HIDE_STYLE_ID)) {
+        const style = document.createElement("style");
+
+        style.id = CLUSTER_LINK_HIDE_STYLE_ID;
+        style.textContent = `
+          a[href="/c/_/manager/provisioning.cattle.io.cluster"] {
+            display: none !important;
+          }
+        `;
+
         document.head.appendChild(style);
       }
 
