@@ -53,18 +53,6 @@ export default {
         document.head.appendChild(style);
       }
 
-      if (!document.getElementById(CLUSTER_LINK_HIDE_STYLE_ID)) {
-        const style = document.createElement("style");
-
-        style.id = CLUSTER_LINK_HIDE_STYLE_ID;
-        style.textContent = `
-          a[href="/c/_/manager/provisioning.cattle.io.cluster"] {
-            display: none !important;
-          }
-        `;
-
-        document.head.appendChild(style);
-      }
 
       if (!document.getElementById(LAYOUT_STYLE_ID)) {
         const style = document.createElement("style");

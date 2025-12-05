@@ -2,6 +2,7 @@ import { importTypes } from "@rancher/auto-import";
 import { IPlugin } from "@shell/core/types";
 import routes from "./routes";
 import CustomHome from "./CustomHome.vue";
+import { registerAccessControl } from "./access-control";
 
 // Init the package
 export default function (plugin: IPlugin): void {
@@ -21,4 +22,6 @@ export default function (plugin: IPlugin): void {
     path: "/home",
     component: CustomHome,
   });
+
+  registerAccessControl(plugin);
 }
