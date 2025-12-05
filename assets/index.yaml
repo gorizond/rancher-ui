@@ -12,9 +12,9 @@ entries:
       catalog.cattle.io/ui-extensions-version: '>= 3.0.0 < 4.0.0'
     apiVersion: v2
     appVersion: 0.1.12
-    created: "2025-12-05T00:27:44.502270421Z"
+    created: "2025-12-05T00:30:54.426124998Z"
     description: gorizond-ui plugin
-    digest: 83875ae913423112944ad0975f7b7ee38c535de2dc41840aa45c83f353e1d84f
+    digest: 940008c1cae90ab84b75db7009b3418c00191553e963218a74f1faa029d4f4a3
     name: gorizond-ui
     type: application
     urls:
@@ -248,4 +248,4 @@ entries:
     urls:
     - assets/gorizond-ui/gorizond-ui-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-05T00:27:44.501550994Z"
+generated: "2025-12-05T00:30:54.425772207Z"
