@@ -22,13 +22,25 @@ export function registerAccessControl(plugin: IPlugin) {
     () => (store: any) => {
       const unwatch = store.watch(
         () => {
-          const schemaFor = store.getters["management/schemaFor"];
+          const getter = store.getters?.["management/schemaFor"];
 
-          // Wait until management schemas are available before checking admin status
-          return schemaFor ? schemaFor(MANAGEMENT.SETTING) : null;
+          // Schemas not ready yet
+          if (typeof getter !== "function") {
+            return null;
+          }
+
+          try {
+            return getter(MANAGEMENT.SETTING);
+          } catch (e) {
+            // Still not ready
+            return null;
+          }
         },
-        () => {
-          hideClusterManagementForNonAdmins(store);
+        (schema: any) => {
+          // Only run when schema is actually loaded
+          if (schema) {
+            hideClusterManagementForNonAdmins(store);
+          }
         },
         { immediate: true }
       );

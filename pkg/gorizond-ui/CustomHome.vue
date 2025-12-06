@@ -1,5 +1,6 @@
 <script lang="ts">
 import Home from "@shell/pages/home.vue";
+// import { CAPI } from "@shell/config/types";
 
 const PRODUCT = "gorizond";
 const CLUSTER = "_";
@@ -15,6 +16,24 @@ export default {
   name: "GorizondHomeWrapper",
 
   created() {
+    // Watch for Gorizond cluster schema to enable Create button
+    this.$watch(
+      () => {
+        try {
+          return this.$store.getters["management/schemaFor"]?.(RESOURCE);
+        } catch (e) {
+          // Schemas aren't ready yet
+          return null;
+        }
+      },
+      (schema: any) => {
+        if (schema) {
+          this.provClusterSchema = schema;
+        }
+      },
+      { immediate: true }
+    );
+
     // Point the Create action to the Gorizond cluster creation form
     this.createLocation = {
       name: `c-cluster-${PRODUCT}-resource-create`,
@@ -35,7 +54,7 @@ export default {
           '[data-testid="cluster-create-import-button"]{display:none !important;}';
         document.head.appendChild(style);
       }
-      
+
       if (!document.getElementById(MANAGE_HIDE_STYLE_ID)) {
         const style = document.createElement("style");
         style.id = MANAGE_HIDE_STYLE_ID;
@@ -52,7 +71,6 @@ export default {
           '.home-page a[href="/support"]{display:none !important;}';
         document.head.appendChild(style);
       }
-
 
       if (!document.getElementById(LAYOUT_STYLE_ID)) {
         const style = document.createElement("style");
