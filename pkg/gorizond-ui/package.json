@@ -1,7 +1,7 @@
 {
   "name": "gorizond-ui",
   "description": "gorizond-ui plugin",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "private": false,
   "rancher": {
     "annotations": {

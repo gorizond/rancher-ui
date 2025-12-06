@@ -57,7 +57,7 @@ export default {
 
         style.id = SUPPORT_HIDE_STYLE_ID;
         style.textContent =
-          '.home-page a[href="/support"]{display:none !important;}';
+          '.home-page a[href$="/support"]{display:none !important;}';
         document.head.appendChild(style);
       }
 
