@@ -38,14 +38,21 @@ export default {
     canCreateCluster() {
       return true;
     },
-    // Make vendor reactive by accessing store settings first
-    // This triggers Vue reactivity when settings are loaded/changed
-    vendor() {
-      // Access store to create reactive dependency on settings
-      this.$store.getters["management/all"](MANAGEMENT.SETTING)?.find(
+    // Watch for settings changes to update vendor reactively
+    plSetting() {
+      return this.$store.getters["management/all"](MANAGEMENT.SETTING)?.find(
         (s: any) => s.id === "ui-pl"
       );
-      return getVendor();
+    },
+  },
+
+  watch: {
+    // Update vendor when Private Label setting changes or loads
+    plSetting: {
+      handler() {
+        this.vendor = getVendor();
+      },
+      immediate: true,
     },
   },
 
