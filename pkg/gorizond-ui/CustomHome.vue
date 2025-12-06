@@ -15,25 +15,22 @@ export default {
   extends: Home,
   name: "GorizondHomeWrapper",
 
-  created() {
-    // Watch for Gorizond cluster schema to enable Create button
-    this.$watch(
-      () => {
-        try {
-          return this.$store.getters["management/schemaFor"]?.(RESOURCE);
-        } catch (e) {
-          // Schemas aren't ready yet
-          return null;
-        }
-      },
-      (schema: any) => {
-        if (schema) {
-          this.provClusterSchema = schema;
-        }
-      },
-      { immediate: true }
-    );
+  computed: {
+    // Override canCreateCluster to check Gorizond schema instead of CAPI.RANCHER_CLUSTER
+    canCreateCluster() {
+      try {
+        const gorizondSchema =
+          this.$store.getters["management/schemaFor"]?.(RESOURCE);
+        return !!gorizondSchema?.collectionMethods?.find(
+          (x: string) => x.toLowerCase() === "post"
+        );
+      } catch (e) {
+        return false;
+      }
+    },
+  },
 
+  created() {
     // Point the Create action to the Gorizond cluster creation form
     this.createLocation = {
       name: `c-cluster-${PRODUCT}-resource-create`,
