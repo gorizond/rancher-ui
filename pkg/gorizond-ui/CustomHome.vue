@@ -16,17 +16,9 @@ export default {
   name: "GorizondHomeWrapper",
 
   computed: {
-    // Override canCreateCluster to check Gorizond schema instead of CAPI.RANCHER_CLUSTER
+    // Always show Create button - all users can create Gorizond clusters
     canCreateCluster() {
-      try {
-        const gorizondSchema =
-          this.$store.getters["management/schemaFor"]?.(RESOURCE);
-        return !!gorizondSchema?.collectionMethods?.find(
-          (x: string) => x.toLowerCase() === "post"
-        );
-      } catch (e) {
-        return false;
-      }
+      return true;
     },
   },
 
