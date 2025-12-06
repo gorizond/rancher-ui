@@ -124,14 +124,6 @@ export default {
 
         document.head.appendChild(style);
       }
-
-      // Stretch home content to full width (the panel wraps the outlet above this component)
-      const panel = this.$el?.closest(".indented-panel");
-
-      if (panel) {
-        panel.setAttribute("style", "width:100%;margin-left:0;");
-        panel.classList.remove("pt-20");
-      }
     });
   },
 };
