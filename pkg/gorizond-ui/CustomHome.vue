@@ -1,7 +1,7 @@
 <script lang="ts">
 import Home from "@shell/pages/home.vue";
 import { getVendor } from "@shell/config/private-label";
-// import { CAPI } from "@shell/config/types";
+import { MANAGEMENT } from "@shell/config/types";
 
 const PRODUCT = "gorizond";
 const CLUSTER = "_";
@@ -30,8 +30,6 @@ export default {
       ...parentData,
       // Ensure provClusterSchema is always set so table shows
       provClusterSchema: capiSchema,
-      // Explicitly get vendor from Global Settings
-      vendor: getVendor(),
     };
   },
 
@@ -39,6 +37,15 @@ export default {
     // Always show Create button - all users can create Gorizond clusters
     canCreateCluster() {
       return true;
+    },
+    // Make vendor reactive by accessing store settings first
+    // This triggers Vue reactivity when settings are loaded/changed
+    vendor() {
+      // Access store to create reactive dependency on settings
+      this.$store.getters["management/all"](MANAGEMENT.SETTING)?.find(
+        (s: any) => s.id === "ui-pl"
+      );
+      return getVendor();
     },
   },
 
