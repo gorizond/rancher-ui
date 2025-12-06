@@ -49,8 +49,13 @@ export default {
   watch: {
     // Update vendor when Private Label setting changes or loads
     plSetting: {
-      handler() {
-        this.vendor = getVendor();
+      handler(setting: any) {
+        // Read directly from store setting, fallback to getVendor()
+        if (setting?.value) {
+          this.vendor = setting.value;
+        } else {
+          this.vendor = getVendor();
+        }
       },
       immediate: true,
     },
