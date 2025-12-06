@@ -11,15 +11,15 @@ entries:
       catalog.cattle.io/ui-component: plugins
       catalog.cattle.io/ui-extensions-version: '>= 3.0.0 < 4.0.0'
     apiVersion: v2
-    appVersion: 0.1.17
-    created: "2025-12-06T12:35:59.415188973Z"
+    appVersion: 0.1.18
+    created: "2025-12-06T12:36:53.11527015Z"
     description: gorizond-ui plugin
-    digest: cbf517c8e3153285540584154900db7e4bcd63c9373296e73713ef476795e0a6
+    digest: fd4a51d2c223dfd5603257340dfb90b031a6897f8a557dd47bef7cde6af68f39
     name: gorizond-ui
     type: application
     urls:
-    - assets/gorizond-ui/gorizond-ui-0.1.17.tgz
-    version: 0.1.17
+    - assets/gorizond-ui/gorizond-ui-0.1.18.tgz
+    version: 0.1.18
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/namespace: cattle-ui-plugin-system
@@ -343,4 +343,4 @@ entries:
     urls:
     - assets/gorizond-ui/gorizond-ui-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-06T12:35:59.414089198Z"
+generated: "2025-12-06T12:36:53.114578273Z"
