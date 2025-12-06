@@ -1,5 +1,6 @@
 <script lang="ts">
 import Home from "@shell/pages/home.vue";
+import { getVendor } from "@shell/config/private-label";
 // import { CAPI } from "@shell/config/types";
 
 const PRODUCT = "gorizond";
@@ -29,6 +30,8 @@ export default {
       ...parentData,
       // Ensure provClusterSchema is always set so table shows
       provClusterSchema: capiSchema,
+      // Explicitly get vendor from Global Settings
+      vendor: getVendor(),
     };
   },
 
