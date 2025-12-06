@@ -29,6 +29,8 @@ export default {
       ...parentData,
       // Ensure provClusterSchema is always set so table shows
       provClusterSchema: capiSchema,
+      // Override vendor to always show Gorizond branding
+      vendor: "Gorizond",
     };
   },
 
