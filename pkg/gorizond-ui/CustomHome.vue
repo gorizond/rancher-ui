@@ -15,6 +15,23 @@ export default {
   extends: Home,
   name: "GorizondHomeWrapper",
 
+  data() {
+    // Get the parent data and ensure provClusterSchema is set
+    // Use provisioning.cattle.io.cluster schema for table display
+    const parentData =
+      Home.data?.call(this) || (Home as any).options?.data?.call(this) || {};
+    const capiSchema =
+      this.$store.getters["management/schemaFor"]?.(
+        "provisioning.cattle.io.cluster"
+      ) || {};
+
+    return {
+      ...parentData,
+      // Ensure provClusterSchema is always set so table shows
+      provClusterSchema: capiSchema,
+    };
+  },
+
   computed: {
     // Always show Create button - all users can create Gorizond clusters
     canCreateCluster() {
