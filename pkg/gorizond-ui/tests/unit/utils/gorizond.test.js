@@ -38,7 +38,7 @@ describe('gorizond utils', () => {
         baseParams.store
       );
 
-      expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
+      expect(mockStore.dispatch).toHaveBeenCalledTimes(3);
       
       // Check GET call
       expect(mockStore.dispatch).toHaveBeenNthCalledWith(1, 'cluster/request', {
@@ -76,7 +76,7 @@ describe('gorizond utils', () => {
         baseParams.store
       );
 
-      expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
+      expect(mockStore.dispatch).toHaveBeenCalledTimes(3);
       
       // Check GET call
       expect(mockStore.dispatch).toHaveBeenNthCalledWith(1, 'cluster/request', {
@@ -115,7 +115,7 @@ describe('gorizond utils', () => {
         paramsWithFree.store
       );
 
-      expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
+      expect(mockStore.dispatch).toHaveBeenCalledTimes(3);
       expect(mockStore.dispatch).toHaveBeenNthCalledWith(2, 'cluster/request', {
         url: '/apis/provisioning.gorizond.io/v1/namespaces/test-namespace/clusters/test-cluster',
         method: 'PATCH',
@@ -146,7 +146,7 @@ describe('gorizond utils', () => {
         paramsWithFree.store
       );
 
-      expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
+      expect(mockStore.dispatch).toHaveBeenCalledTimes(3);
       expect(mockStore.dispatch).toHaveBeenNthCalledWith(2, 'cluster/request', {
         url: '/apis/provisioning.gorizond.io/v1/namespaces/test-namespace/clusters',
         method: 'POST',
@@ -177,7 +177,7 @@ describe('gorizond utils', () => {
         paramsWithNull.store
       );
 
-      expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
+      expect(mockStore.dispatch).toHaveBeenCalledTimes(3);
       expect(mockStore.dispatch).toHaveBeenNthCalledWith(2, 'cluster/request', {
         url: '/apis/provisioning.gorizond.io/v1/namespaces/test-namespace/clusters/test-cluster',
         method: 'PATCH',
@@ -221,7 +221,7 @@ describe('gorizond utils', () => {
         paramsWithEmpty.store
       );
 
-      expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
+      expect(mockStore.dispatch).toHaveBeenCalledTimes(3);
       expect(mockStore.dispatch).toHaveBeenNthCalledWith(2, 'cluster/request', {
         url: '/apis/provisioning.gorizond.io/v1/namespaces/test-namespace/clusters/test-cluster',
         method: 'PATCH',
@@ -252,7 +252,7 @@ describe('gorizond utils', () => {
         paramsWithUndefined.store
       );
 
-      expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
+      expect(mockStore.dispatch).toHaveBeenCalledTimes(3);
       expect(mockStore.dispatch).toHaveBeenNthCalledWith(2, 'cluster/request', {
         url: '/apis/provisioning.gorizond.io/v1/namespaces/test-namespace/clusters',
         method: 'POST',
@@ -286,7 +286,7 @@ describe('gorizond utils', () => {
         paramsWithSpecialChars.store
       );
 
-      expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
+      expect(mockStore.dispatch).toHaveBeenCalledTimes(3);
       expect(mockStore.dispatch).toHaveBeenNthCalledWith(1, 'cluster/request', {
         url: '/apis/provisioning.gorizond.io/v1/namespaces/test-namespace/clusters/test-cluster-with-special-chars-123',
         method: 'GET'
@@ -308,7 +308,7 @@ describe('gorizond utils', () => {
         paramsWithSpecialNamespace.store
       );
 
-      expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
+      expect(mockStore.dispatch).toHaveBeenCalledTimes(3);
       expect(mockStore.dispatch).toHaveBeenNthCalledWith(1, 'cluster/request', {
         url: '/apis/provisioning.gorizond.io/v1/namespaces/test-namespace-with-dashes/clusters/test-cluster',
         method: 'GET'

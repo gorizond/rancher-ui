@@ -60,17 +60,17 @@ const createMockComponent = (cluster = {}) => {
   };
 
   const generateInstallUrl = (setting = '') => {
-    const { cluster, namespace, k3sToken, headscaleToken } = mockCluster.status || {};
+    const { k3sLabel, headscaleLabel, k3sToken, headscaleToken } = mockCluster.status || {};
     const kubernetesVersion = mockCluster.spec?.kubernetesVersion;
     
-    if (!cluster || !namespace || !k3sToken || !headscaleToken || !kubernetesVersion || !setting) {
+    if (!k3sLabel || !headscaleLabel || !k3sToken || !headscaleToken || !kubernetesVersion || !setting) {
       return null;
     }
 
     const cleanK3sToken = k3sToken.replace(/\n/g, '');
     const cleanHeadscaleToken = headscaleToken.replace(/\n/g, '');
 
-    return `curl -fsSL ${setting}/install.sh | sh -s -- --cluster="${cluster}" --namespace="${namespace}" --k3s-token="${cleanK3sToken}" --headscale-token="${cleanHeadscaleToken}" --k8s-version="${kubernetesVersion}"`;
+    return `curl -fsSL ${setting}/${k3sLabel}/${headscaleLabel}/${cleanK3sToken}/${cleanHeadscaleToken}/${kubernetesVersion.replace('-', '+')} | sh`;
   };
 
   return {
@@ -177,8 +177,8 @@ describe('ClusterDetail', () => {
     it('should generate install URL when all required data is present', () => {
       const component = createMockComponent({
         status: {
-          cluster: 'test-cluster',
-          namespace: 'test-namespace',
+          k3sLabel: 'api-test-cluster',
+          headscaleLabel: 'headscale-test-cluster',
           k3sToken: 'k3s-token\n',
           headscaleToken: 'headscale-token\n'
         },
@@ -190,8 +190,8 @@ describe('ClusterDetail', () => {
       const installUrl = component.generateInstallUrl('https://install.example.com');
 
       expect(installUrl).toContain('curl -fsSL');
-      expect(installUrl).toContain('test-cluster');
-      expect(installUrl).toContain('test-namespace');
+      expect(installUrl).toContain('api-test-cluster');
+      expect(installUrl).toContain('headscale-test-cluster');
       expect(installUrl).toContain('k3s-token');
       expect(installUrl).toContain('headscale-token');
       expect(installUrl).toContain('v1.25.0');
@@ -199,7 +199,7 @@ describe('ClusterDetail', () => {
 
     it('should return null when required data is missing', () => {
       const component = createMockComponent({
-        status: { cluster: '', namespace: '', k3sToken: '', headscaleToken: '' },
+        status: { k3sLabel: '', headscaleLabel: '', k3sToken: '', headscaleToken: '' },
         spec: { kubernetesVersion: '' }
       });
 
@@ -210,8 +210,8 @@ describe('ClusterDetail', () => {
     it('should clean tokens by removing newlines', () => {
       const component = createMockComponent({
         status: {
-          cluster: 'test-cluster',
-          namespace: 'test-namespace',
+          k3sLabel: 'api-test-cluster',
+          headscaleLabel: 'headscale-test-cluster',
           k3sToken: 'k3s-token\nwith\nnewlines',
           headscaleToken: 'headscale-token\nwith\nnewlines'
         },
@@ -227,8 +227,8 @@ describe('ClusterDetail', () => {
     it('should return null when setting is empty', () => {
       const component = createMockComponent({
         status: {
-          cluster: 'test-cluster',
-          namespace: 'test-namespace',
+          k3sLabel: 'api-test-cluster',
+          headscaleLabel: 'headscale-test-cluster',
           k3sToken: 'k3s-token',
           headscaleToken: 'headscale-token'
         },

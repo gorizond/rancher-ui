@@ -194,9 +194,9 @@ export default {
       const kubernetesVersion = this.cluster.spec?.kubernetesVersion;
 
       if (
-        s.cluster &&
-        s.namespace &&
         name &&
+        s.k3sLabel &&
+        s.headscaleLabel &&
         s.k3sToken &&
         s.headscaleToken &&
         kubernetesVersion
@@ -205,7 +205,7 @@ export default {
         const headscaleToken = s.headscaleToken.replace(/\n/g, "");
         const version = kubernetesVersion.replace("-", "+");
 
-        return `curl -fsSL ${this.setting}/${s.cluster}/${s.namespace}/${name}/${k3sToken}/${headscaleToken}/${version} | sh`;
+        return `curl -fsSL ${this.setting}/${s.k3sLabel}/${s.headscaleLabel}/${k3sToken}/${headscaleToken}/${version} | sh`;
       }
 
       return null;
